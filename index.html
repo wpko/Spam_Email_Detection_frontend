@@ -1,71 +1,42 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Spam Email Detection</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h1>Email Form</h1>
-    <Form id="predictionForm">
-      <label for="age">Age:</label>
-      <input type="number" id="age" name="age" required><br><br>
-      <label for="sex">Sex:</label>
-      <select id="sex" name="sex" required>
-        <option value="M">Male</option>
-        <option value="F">Female</option>
-      </select><br><br>
-      <label for="bp">Blood Pressue:</label>
-      <select id="bp" name="bp" required>
-        <option value="HIGH">HIGH</option>
-        <option value="NORMAL">NORMAL</option>
-        <option value="LOW">LOW</option>
-      </select><br><br>
-      <label for="cholesterol">Cholesterol:</label>
-      <select id="cholesterol" name="cholesterol" required>
-        <option value="HIGH">HIGH</option>
-        <option value="NORMAL">NORMAL</option>
-      </select><br><br>
-      <label for="na_to_k">Na_to_K:</label>
-      <input type="number" id="na_to_k" name="na_to_k" step="0.01" required><br><br>
-      <button type="button" onclick="makePrediction()">Predict</button>
-    </Form>
-    <h2 id="result"></h2>
-    <script>
-      async function makePrediction(){
-        const age = document.getElementById("age").value;
-        const sex = document.getElementById("sex").value;
-        const bp = document.getElementById("bp").value;
-        const cholesterol = document.getElementById("cholesterol").value;
-        const na_to_k = document.getElementById("na_to_k").value;
-        const data = {
-          Age: parseInt(age),
-          Sex: sex,
-          Blood_Pressure: bp,
-          Cholestorl: cholesterol,
-          Na_to_k: parseFloat(na_to_k)};
-        try {
-          const response = await fetch("https://drug-predition.onrender.com/predict",
-                                       {
-                                         method: "POST",
-                                         headers: {
-                                           "content-Type": "application/json"
-                                         },
-                                         body: JSON.stringify(data)
-                                       });
-          if(!response.ok){
-            throw new Error("Network response was not ok"+response.statusText);
-          }
-          const result = await response.json();
-          console.log("Prediction Result:",result);
-          console.log(result.prediction);
-          document.getElementById("result").innerText = "Recommended Drug:" +result.prediction;
-        }
-        catch(error)
-        {
-          console.error("Error:", error);
-          document.getElementById("result").innerText = "Error: Unable to get prediction.";
-        }
+<html lang='en'>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scaler=1.0">
+  <title>Spam Email Detection</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class='container'>
+    <h1>Spam Email Detection</h1>
+    <form id="spamForm">
+      <label for='email'>Enter Your Email text:</label>
+      <textarea id='email' name='email' rows='6' placeholder='Type your email here...'></textarea>
+      <button type='submit'>Check</button>
+    </form>
+    <div id='result'></div>
+  </div>
+  <script>
+    const form = document.getElementById("spamForm");
+    form.addEventListener("submit", async(event) => {
+      event.preventDefault();
+      const emailText = document.getElementById("email").value;
+      if(!emailText.trim()){
+        alert("Please enter some email text.");
+        return;
       }
-    </script>
-  </body>
+      const response = await fetch("",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify({mail:emailText}),
+      });
+      const data = await response.json();
+      const resultDiv = document.getElementById("result");
+      resultDiv.textContent = 'Prediction:${data.prediction}';
+      resultDiv.className = data.prediction ==="Spam"?"spam":"not-spam";
+    });
+  </script>
+</body>
 </html>
