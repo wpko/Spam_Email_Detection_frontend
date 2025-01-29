@@ -36,6 +36,10 @@
       const resultDiv = document.getElementById("result");
       resultDiv.textContent = 'Prediction:${data.prediction}';
       resultDiv.className = data.prediction ==="Spam"?"spam":"not-spam";
+    }
+      catch(error){
+        console.error("Error",error);
+        alert("something wrong");
     });
   </script>
 </body>
