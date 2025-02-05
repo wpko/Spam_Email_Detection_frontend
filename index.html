@@ -32,12 +32,12 @@
         },
         body: JSON.stringify({mail:emailText}),
       });
-      const data = await response.json();
-      const resultDiv = document.getElementById("data");
-      resultDiv.textContent = 'Prediction:${data.prediction}';
-      resultDiv.className = data.prediction ==="Spam"?"spam":"not-spam";
-      console.log("Prediction Result:",data);
-      console.log(data.prediction);
+      const result = await response.json();
+      const resultDiv = document.getElementById("result");
+      resultDiv.textContent = 'Prediction:${result.prediction}';
+      resultDiv.className = result.prediction ==="Spam"?"spam":"not-spam";
+      console.log("Prediction Result:",result);
+      console.log(result.prediction);
     });
   </script>
 </body>
