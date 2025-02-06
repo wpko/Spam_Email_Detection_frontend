@@ -33,7 +33,7 @@
         body: JSON.stringify({mail:emailText}),
       });
       const result = await response.json();
-      document.getElementById("result").innerText = 'Prediction: ${result.prediction}';
+      document.getElementById("result").innerText = 'Prediction :'+result.prediction;
       console.log("Prediction Result:",result);
       console.log(result.prediction);
     });
