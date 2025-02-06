@@ -33,7 +33,9 @@
         body: JSON.stringify({mail:emailText}),
       });
       const result = await response.json();
+      const resultDiv = document.getElementById("result");
       document.getElementById("result").innerText = 'Prediction :'+result.prediction;
+      resultDiv.className = result.prediction === "Spam"?"spam":"not-spam";
       console.log("Prediction Result:",result);
       console.log(result.prediction);
     });
