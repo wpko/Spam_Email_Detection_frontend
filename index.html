@@ -34,7 +34,7 @@
       });
       const result = await response.json();
       const resultDiv = document.getElementById("result");
-      resultDiv.textContent = 'Prediction:${result.prediction}';
+      resultDiv.innerHTML = 'Prediction:${result.prediction}';
       resultDiv.className = result.prediction ==="Spam"?"spam":"not-spam";
       console.log("Prediction Result:",result);
       console.log(result.prediction);
